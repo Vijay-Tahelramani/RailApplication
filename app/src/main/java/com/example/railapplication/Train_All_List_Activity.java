@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,14 +15,13 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ListOfTrains_Recycle_Activity extends AppCompatActivity {
+public class Train_All_List_Activity extends AppCompatActivity {
 
     ArrayList<train_data> trainDataArrayList;
     RecyclerView recyclerView;
@@ -31,9 +29,9 @@ public class ListOfTrains_Recycle_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_of_trains_recycle);
+        setContentView(R.layout.activity_train_all_list);
 
-        recyclerView = findViewById(R.id.Train_List_recycler_view);
+        recyclerView = findViewById(R.id.Train_All_List_recycler_view);
 
         trainDataArrayList = new ArrayList<train_data>();
         recAdapter = new RecAdapter(trainDataArrayList,getApplicationContext());
@@ -125,7 +123,7 @@ public class ListOfTrains_Recycle_Activity extends AppCompatActivity {
                         public void onClick(View view) {
                             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
                             int position = viewHolder.getAdapterPosition();
-                            Intent i = new Intent(ListOfTrains_Recycle_Activity.this,Update_trains_Activity.class);
+                            Intent i = new Intent(Train_All_List_Activity.this,Update_trains_Activity.class);
                             i.putExtra("train_id",trainDataArrayList.get(position).getTrain_id());
                             i.putExtra("train_name",trainDataArrayList.get(position).getTrain_name());
                             i.putExtra("train_type",trainDataArrayList.get(position).getTrain_type());
