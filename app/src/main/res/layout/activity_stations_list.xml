@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListOfTrains_Recycle_Activity">
+    tools:context=".Stations_List_Activity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/Train_List_recycler_view"
+        android:id="@+id/Stations_List_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"

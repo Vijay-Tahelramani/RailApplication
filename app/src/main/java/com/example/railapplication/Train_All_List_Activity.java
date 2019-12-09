@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.view.View;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,38 +21,48 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 
 public class Train_All_List_Activity extends AppCompatActivity {
 
     ArrayList<train_data> trainDataArrayList;
-    RecyclerView recyclerView;
+    RecyclerView train_list_recyclerView;
     RecAdapter recAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train_all_list);
 
-        recyclerView = findViewById(R.id.Train_All_List_recycler_view);
+        train_list_recyclerView = findViewById(R.id.Train_All_List_recycler_view);
 
         trainDataArrayList = new ArrayList<train_data>();
         recAdapter = new RecAdapter(trainDataArrayList,getApplicationContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setAdapter(recAdapter);
+        train_list_recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        train_list_recyclerView.setAdapter(recAdapter);
         loadData();
 
     }
 
     public void loadData(){
-        MyTask process = new MyTask();
+        MyTask process = new MyTask(getApplicationContext());
         process.execute();
     }
 
     private class MyTask extends AsyncTask<Void, Void, String> {
         String message;
+        Context context;
+
+        public MyTask(Context context) {
+            this.context = context;
+        }
+
         @Override
         protected String doInBackground(Void... params){
 
@@ -55,7 +70,7 @@ public class Train_All_List_Activity extends AppCompatActivity {
             URL url = null;
             try {
 
-                url = new URL("http://192.168.3.102:8080/RailApplication/cegep/mobile/viewTrainsDetails");
+                url = new URL("http://192.168.100.101:8080/RailApplication/cegep/mobile/viewCorrespondingStations");
 
                 HttpURLConnection client = null;
 
@@ -106,15 +121,16 @@ public class Train_All_List_Activity extends AppCompatActivity {
             try
             {
                 JSONObject responseObj = new JSONObject(jsonResponse);
-                JSONArray jsonArray = responseObj.getJSONArray("Trains");
+                System.out.println("Response: " + responseObj);
+                final JSONArray jsonArray = responseObj.getJSONArray("Trains");
                 for(int i=0;i<jsonArray.length();i++)
                 {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    train_data item = new train_data(jsonObject.getInt("TrainId"),
-                            jsonObject.getString("TrainName"),
-                            jsonObject.getString("TrainType"),
-                            jsonObject.getString("ArrivalTime"),
-                            jsonObject.getString("DepartTime"),
+                    final JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    train_data item = new train_data(jsonObject.getInt("Train_id"),
+                            jsonObject.getString("Train_name"),
+                            jsonObject.getString("Train_type"),
+                            jsonObject.getString("Arrival_time"),
+                            jsonObject.getString("Depart_time"),
                             jsonObject.getInt("NumberOFCoaches"));
                     trainDataArrayList.add(item);
                     recAdapter.notifyDataSetChanged();
@@ -123,14 +139,20 @@ public class Train_All_List_Activity extends AppCompatActivity {
                         public void onClick(View view) {
                             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
                             int position = viewHolder.getAdapterPosition();
-                            Intent i = new Intent(Train_All_List_Activity.this,Update_trains_Activity.class);
-                            i.putExtra("train_id",trainDataArrayList.get(position).getTrain_id());
-                            i.putExtra("train_name",trainDataArrayList.get(position).getTrain_name());
-                            i.putExtra("train_type",trainDataArrayList.get(position).getTrain_type());
-                            i.putExtra("train_arrival_time",trainDataArrayList.get(position).getTrain_arrival_time());
-                            i.putExtra("train_departure_time",trainDataArrayList.get(position).getTrain_departure_time());
-                            i.putExtra("train_num_of_coaches",trainDataArrayList.get(position).getTrain_num_of_coaches());
-                            startActivity(i);
+                            String Routes = "";
+                            try {
+                                if(jsonArray.getJSONObject(position).has("Routes")) {
+                                    Routes = jsonArray.getJSONObject(position).getJSONArray("Routes").toString();
+                                    Intent i = new Intent(Train_All_List_Activity.this,RouteListActivity.class);
+                                    i.putExtra("Routes",Routes);
+                                    startActivity(i);
+                                }
+                                else {
+                                    Toast.makeText(context,"No Routes Found",Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
 
