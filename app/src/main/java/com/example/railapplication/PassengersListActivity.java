@@ -62,7 +62,7 @@ public class PassengersListActivity extends AppCompatActivity {
             URL url = null;
             try {
 
-                url = new URL("http://192.168.2.44:8080/RailApplication/cegep/mobile/viewPassengersDetails");
+                url = new URL("http://192.168.3.102:8080/RailApplication/cegep/mobile/viewPassengersDetails");
 
                 HttpURLConnection client = null;
 

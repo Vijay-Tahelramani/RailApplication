@@ -12,20 +12,38 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PassengerDetailsActivity"></activity>
-        <activity android:name=".PassengersListActivity"></activity>
-        <activity android:name=".Stations_List_Activity" />
-        <activity android:name=".RouteListActivity" />
-        <activity android:name=".Train_All_List_Activity">
+
+        <!--*************** Ami ***********************-->
+
+        <activity android:name=".PassengersListActivity">
+            <!-- Put Intent filter here -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Update_trains_Activity" />
+        <activity android:name=".PassengerDetailsActivity" />
+
+        <!--******************** Monika *****************-->
+
+        <activity android:name=".MainActivity" >
+            <!-- Put Intent filter here -->
+
+
+        </activity>
         <activity android:name=".ListOfTrains_Recycle_Activity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Update_trains_Activity" />
+
+        <!--*************** Khushal *************************-->
+        <activity android:name=".Train_All_List_Activity">
+            <!-- Put Intent filter here -->
+
+
+        </activity>
+        <activity android:name=".Stations_List_Activity" />
+        <activity android:name=".RouteListActivity" />
+
     </application>
 
 </manifest>
