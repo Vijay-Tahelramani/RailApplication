@@ -17,11 +17,6 @@
 
         <activity android:name=".PassengersListActivity">
             <!-- Put Intent filter here -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".PassengerDetailsActivity" />
 
@@ -29,7 +24,11 @@
 
         <activity android:name=".MainActivity" >
             <!-- Put Intent filter here -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity android:name=".ListOfTrains_Recycle_Activity" />

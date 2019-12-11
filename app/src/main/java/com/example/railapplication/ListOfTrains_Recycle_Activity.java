@@ -57,7 +57,7 @@ public class ListOfTrains_Recycle_Activity extends AppCompatActivity {
             URL url = null;
             try {
 
-                url = new URL("http://192.168.3.102:8080/RailApplication/cegep/mobile/viewTrainsDetails");
+                url = new URL("http://"+getResources().getString(R.string.id_address)+":8080/RailApplication/cegep/mobile/viewTrainsDetails");
 
                 HttpURLConnection client = null;
 

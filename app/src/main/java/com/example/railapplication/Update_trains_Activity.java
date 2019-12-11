@@ -94,7 +94,7 @@ public class Update_trains_Activity extends AppCompatActivity implements View.On
             URL url = null;
             try {
 
-                url = new URL("http://192.168.3.102:8080/RailApplication/cegep/mobile/modifyTrain&"+id+"&"+name+"&"+type+"&"+coaches+"&"+atime+"&"+dtime);
+                url = new URL("http://"+getResources().getString(R.string.id_address)+":8080/RailApplication/cegep/mobile/modifyTrain&"+id+"&"+name+"&"+type+"&"+coaches+"&"+atime+"&"+dtime);
 
                 HttpURLConnection client = null;
 

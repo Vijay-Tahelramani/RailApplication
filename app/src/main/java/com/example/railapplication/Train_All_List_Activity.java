@@ -70,7 +70,7 @@ public class Train_All_List_Activity extends AppCompatActivity {
             URL url = null;
             try {
 
-                url = new URL("http://192.168.2.44:8080/RailApplication/cegep/mobile/viewCorrespondingStations");
+                url = new URL("http://"+getResources().getString(R.string.id_address)+":8080/RailApplication/cegep/mobile/viewCorrespondingStations");
 
                 HttpURLConnection client = null;
 

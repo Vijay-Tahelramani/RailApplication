@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             URL url = null;
             try {
 
-                url = new URL("http://192.168.3.102:8080/RailApplication/cegep/mobile/registerTrain&"+name+"&"+coaches+"&"+type+"&"+atime+"&"+dtime);
+                url = new URL("http://"+getResources().getString(R.string.id_address)+":8080/RailApplication/cegep/mobile/registerTrain&"+name+"&"+coaches+"&"+type+"&"+atime+"&"+dtime);
 
                 HttpURLConnection client = null;
 
